@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">OneTapSOS</string>
+    <string name="onetapsos">OneTapSOS</string>
+    <string name="gps_fetching_location">GPS: Fetching location.....</string>
+    <string name="send_button">Send button</string>
+    <string name="type_emergency_here">Type emergency here...</string>
+    <string name="record_button">Record button</string>
+    <string name="press_the_button_to_record_the_audio">Press the button to record the audio</string>
+    <string name="one_tap_sos">One-Tap SOS</string>
+    <string name="menu_icon">menu_icon</string>
+    <string name="gps_status_none">GPS Status: None</string>
+    <string name="record">record</string>
+    <string name="gps_status_non">GPS Status: None</string>
+    <string name="send_message">Send Message</string>
+    <string name="account_status_registered_ncalls_available_unlimited">Account Status: Registered\nCalls Available: Unlimited</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="full_name">Full Name</string>
+    <string name="back_to_home">Back to Home</string>
+</resources>

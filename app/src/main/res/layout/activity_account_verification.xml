@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- 🔙 Back Arrow -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_send"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp"
+            android:contentDescription="Back"
+            android:padding="8dp" />
+
+        <!-- 📝 Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account Verification"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:layout_marginTop="82dp" />
+
+        <!-- 🔍 Subtitle -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Verify account using"
+            android:textSize="16sp"
+            android:textColor="@color/primary"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 📧 Verify by Email -->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/white"
+            android:layout_marginTop="24dp"
+
+            android:textSize="18sp"
+            android:paddingStart="100dp"
+            android:paddingEnd="100dp"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            />
+
+        <!-- ➖ OR Text -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="or"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/primary"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp" />
+
+        <!-- 📱 Verify by Mobile -->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mobile Number"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:paddingStart="65dp"
+            android:paddingEnd="65dp"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:maxLines="1"
+            android:ellipsize="none" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="center_container" type="id" />
+    <item name="text_header" type="id" />
+    <item name="icon_back_to_landing" type="id" />
+    <item name="edit_code_input" type="id" />
+    <item name="text_use_another_email" type="id" />
+    <item name="text_use_phone" type="id" />
+</resources>

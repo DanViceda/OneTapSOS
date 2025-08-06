@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- 🔙 Back Arrow -->
+        <ImageView
+            android:id="@+id/icon_back_to_landing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_send"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp"
+            android:contentDescription="Back"
+            android:padding="8dp" />
+
+        <!-- 📝 Title -->
+        <TextView
+            android:id="@+id/text_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Input CODE sent to your Email"
+            android:textSize="28sp"
+            android:textColor="@color/primary"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="32dp" />
+
+        <!-- 🔐 Code Input -->
+        <EditText
+            android:id="@+id/edit_code_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Code"
+            android:textSize="18sp"
+            android:padding="18dp"
+            android:inputType="number"
+            android:background="@drawable/box_input"
+            android:layout_marginBottom="64dp" />
+
+        <!-- 📧 Use another email -->
+        <TextView
+            android:id="@+id/text_use_another_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Use another email?"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 📱 Use phone number -->
+        <TextView
+            android:id="@+id/text_use_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Use Phone Number?"
+            android:textColor="@color/primary"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</ScrollView>

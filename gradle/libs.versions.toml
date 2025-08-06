@@ -1,0 +1,59 @@
+[versions]
+activityVersion = "1.9.2"
+agp = "8.9.0"
+androidxSecurityCrypto = "1.1.0-beta01"
+annotation = "1.9.1"
+bom = "1.0.0"
+constraintlayoutVersion = "2.1.4"
+coreKtxVersion = "1.13.1"
+kotlin = "2.0.21"
+coreKtx = "1.16.0"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.1"
+kotlinxSerializationJson = "1.5.1"
+kotlinxSerializationJsonVersion = "1.7.1"
+ktorClientAndroid = "2.3.0"
+ktorClientAndroidVersion = "2.3.12"
+material = "1.12.0"
+activity = "1.10.1"
+constraintlayout = "2.2.1"
+playServicesLocation = "21.3.0"
+postgrestKt = "2.4.1"
+securityCrypto = "1.0.0"
+securityCryptoVersion = "1.1.0-alpha03"
+storageKt = "2.4.1"
+
+[libraries]
+androidx-activity-v192 = { module = "androidx.activity:activity", version.ref = "activityVersion" }
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
+androidx-constraintlayout-v214 = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayoutVersion" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-ktx-v1131 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+androidx-security-crypto-v110alpha03 = { module = "androidx.security:security-crypto", version.ref = "securityCryptoVersion" }
+androidx-security-crypto-v110beta01 = { module = "androidx.security:security-crypto", version.ref = "androidxSecurityCrypto" }
+bom = { module = "io.github.jan-tennert.supabase:bom", version.ref = "bom" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+kotlinx-serialization-json-v171 = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJsonVersion" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorClientAndroid" }
+ktor-client-android-v2312 = { module = "io.ktor:ktor-client-android", version.ref = "ktorClientAndroidVersion" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt" }
+storage-kt = { module = "io.github.jan-tennert.supabase:storage-kt" }
+supabase-kt = { module = "io.github.jan-tennert.supabase:supabase-kt" }
+supabase-storage-kt = { module = "io.github.jan-tennert.supabase:storage-kt", version.ref = "storageKt" }
+supabase-postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "postgrestKt" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
