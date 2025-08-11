@@ -28,14 +28,12 @@ import com.google.android.gms.location.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    // UI elements
+
     private lateinit var messageInput: EditText
     private lateinit var gpsStatusText: TextView
-    private lateinit var speechLauncher: ActivityResultLauncher<Intent>
-
-    // Location service
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    private lateinit var speechLauncher: ActivityResultLauncher<Intent>
 
     private var capturedText: String = ""
 
@@ -43,31 +41,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize UI elements from layout
+        initViews()
+        initSpeechRecognition()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        checkAndRequestPermissions()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateGPSStatus()
+        getLastKnownLocation()
+        startLocationUpdates()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+    /** Initialize UI components and listeners */
+    private fun initViews() {
         val recordButton = findViewById<ImageButton>(R.id.imageButton)
         val sendButton = findViewById<ImageButton>(R.id.sendButton)
+        val hamburgerButton = findViewById<ImageButton>(R.id.buttonIcon)
+
         messageInput = findViewById(R.id.messageInput)
         gpsStatusText = findViewById(R.id.gpsStatus)
 
-        // Set up location provider
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-        // Check and request required permissions
-        checkAndRequestPermissions()
-
-        // Initialize voice-to-text launcher
-        speechLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK && result.data != null) {
-                val results = result.data!!.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                capturedText = results?.get(0) ?: ""
-                messageInput.setText(capturedText) // Populate textbox with result
-                Log.d("SpeechToText", "Captured text: $capturedText")
-            } else {
-                Toast.makeText(this, "Speech recognition failed", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        // Handle mic button click
         recordButton.setOnClickListener {
             if (checkMicrophonePermission()) {
                 startVoiceRecognition()
@@ -76,109 +77,107 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Handle send button click
-        sendButton.setOnClickListener {
-            val userMessage = messageInput.text.toString()
-            val locationText = gpsStatusText.text.toString().substringAfter("Location:").trim()
+        sendButton.setOnClickListener { sendSOSMessage() }
 
-            // Check if message and location are not empty
-            if (userMessage.isNotEmpty() && locationText.isNotEmpty()) {
-                // Structured message format
-                val structuredMessage = """
-                    Hello this is from OneTapSOS
+        hamburgerButton.setOnClickListener { handleHamburgerClick() }
+    }
 
-                    $userMessage
-
-                    $locationText
-
-                    From
-                    [Not Available]
-
-                    Sent via OneTapSOS
-                """.trimIndent()
-
-                // ⚠️ TEST NUMBER: Replace with your own number for testing.
-                // Do not commit real numbers in production for privacy.
-                sendSMS("09766213164", structuredMessage)
+    /** Setup speech recognition launcher */
+    private fun initSpeechRecognition() {
+        speechLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                val results = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                capturedText = results?.get(0) ?: ""
+                messageInput.setText(capturedText)
+                Log.d("SpeechToText", "Captured text: $capturedText")
             } else {
-                Toast.makeText(this, "Missing message or location info", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Speech recognition failed", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        updateGPSStatus() // Update GPS label when app resumes
-        startLocationUpdates() // Start real-time location updates
+    /** Handle hamburger menu based on login state */
+    private fun handleHamburgerClick() {
+        val sharedPrefs = getSharedPreferences("OneTapSOS", Context.MODE_PRIVATE)
+        val isLoggedIn = sharedPrefs.getBoolean("isLoggedIn", false)
+
+        val targetActivity = if (isLoggedIn) {
+            ProfileActivity::class.java
+        } else {
+            GuestActivity::class.java
+        }
+
+        startActivity(Intent(this, targetActivity))
     }
 
-    override fun onPause() {
-        super.onPause()
-        fusedLocationClient.removeLocationUpdates(locationCallback) // Stop tracking when paused
+    /** Send SOS SMS */
+    private fun sendSOSMessage() {
+        val userMessage = messageInput.text.toString()
+        val locationText = gpsStatusText.text.toString().substringAfter("Location:").trim()
+
+        if (userMessage.isNotEmpty() && locationText.isNotEmpty()) {
+            val structuredMessage = """
+                Hello this is from OneTapSOS
+
+                $userMessage
+
+                $locationText
+
+                From
+                [Not Available]
+
+                Sent via OneTapSOS
+            """.trimIndent()
+
+            if (hasSmsPermission()) {
+                sendSMS("09766213164", structuredMessage)
+            } else {
+                Toast.makeText(this, "SMS permission not granted", Toast.LENGTH_SHORT).show()
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), 1001)
+            }
+        } else {
+            Toast.makeText(this, "Missing message or location info", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    // Check and request permissions
+    /** Permissions */
     private fun checkAndRequestPermissions() {
         val neededPermissions = mutableListOf<String>()
 
-        if (!checkMicrophonePermission()) {
-            neededPermissions.add(Manifest.permission.RECORD_AUDIO)
-        }
+        if (!checkMicrophonePermission()) neededPermissions.add(Manifest.permission.RECORD_AUDIO)
 
-        // Check location permissions
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(
-                this,
+        if (!hasLocationPermission()) {
+            neededPermissions.addAll(listOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            neededPermissions.addAll(
-                listOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-            )
+            ))
         }
 
-        // Check SMS permission
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.SEND_SMS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            neededPermissions.add(Manifest.permission.SEND_SMS)
-        }
+        if (!hasSmsPermission()) neededPermissions.add(Manifest.permission.SEND_SMS)
 
-        // Request all missing permissions
         if (neededPermissions.isNotEmpty()) {
             ActivityCompat.requestPermissions(this, neededPermissions.toTypedArray(), 1001)
-        } else {
-            startLocationUpdates()
         }
     }
 
-    // Check microphone permission
-    private fun checkMicrophonePermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.RECORD_AUDIO
-        ) == PackageManager.PERMISSION_GRANTED
-    }
+    private fun checkMicrophonePermission() =
+        ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+
+    private fun hasLocationPermission() =
+        ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
+    private fun hasSmsPermission() =
+        ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED
 
     private fun requestMicrophonePermission() {
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1)
     }
 
-    // Start voice recognition (speech-to-text)
+    /** Speech recognition trigger */
     private fun startVoiceRecognition() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(
-                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-            )
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault().toString())
             putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now…")
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
@@ -188,137 +187,137 @@ class MainActivity : AppCompatActivity() {
         speechLauncher.launch(intent)
     }
 
-    // Set up location tracking
-    @SuppressLint("SetTextI18n")
+    /** Location */
+    private fun getLastKnownLocation() {
+        if (hasLocationPermission()) {
+            try {
+                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                    if (location != null) {
+                        updateLocationUI(location.latitude, location.longitude)
+                    } else {
+                        gpsStatusText.text = getString(R.string.fetching_location)
+                    }
+                }
+            } catch (se: SecurityException) {
+                Log.e("Location", "Permission denied for last known location", se)
+            }
+        }
+    }
+
     private fun startLocationUpdates() {
         val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 5000).build()
 
         locationCallback = object : LocationCallback() {
-            @SuppressLint("SetTextI18n")
             override fun onLocationResult(locationResult: LocationResult) {
                 for (location in locationResult.locations) {
-                    val latitude = location.latitude
-                    val longitude = location.longitude
-
-                    // Convert coordinates to address
-                    val geocoder = Geocoder(this@MainActivity, Locale.getDefault())
-                    val addressList: List<Address>? = geocoder.getFromLocation(latitude, longitude, 1)
-                    if (!addressList.isNullOrEmpty()) {
-                        val address = addressList[0]
-
-                        val street = address.thoroughfare ?: ""
-                        val barangay = address.subLocality ?: ""
-                        val city = address.locality ?: ""
-                        val province = address.adminArea ?: ""
-                        val country = address.countryName ?: ""
-
-                        val gpsStatus = updateGPSStatus()
-                        val fullAddress = "$street, $barangay, $city, $province, $country"
-
-                        // Display real-time address + GPS status
-                        gpsStatusText.text = "$gpsStatus\nLocation: $fullAddress"
-                        Log.d("GeoLocation", "Full Address: $fullAddress")
-                    } else {
-                        gpsStatusText.text = "Unable to find address"
-                    }
+                    updateLocationUI(location.latitude, location.longitude)
                 }
             }
         }
 
-        // Check permission before requesting updates
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED ||
-            ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            fusedLocationClient.requestLocationUpdates(
-                locationRequest,
-                locationCallback,
-                mainLooper
-            )
-        } else {
-            gpsStatusText.text = "Location permission denied"
-            gpsStatusText.setTextColor(ContextCompat.getColor(this, R.color.red))
+        if (hasLocationPermission()) {
+            try {
+                fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, mainLooper)
+            } catch (se: SecurityException) {
+                Log.e("Location", "Permission denied for location updates", se)
+            }
         }
     }
 
-    // Update GPS status label
+    @SuppressLint("SetTextI18n")
+    private fun updateLocationUI(latitude: Double, longitude: Double) {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val addressList: List<Address>? = geocoder.getFromLocation(latitude, longitude, 1)
+
+        if (!addressList.isNullOrEmpty()) {
+            val address = addressList[0]
+            val fullAddress = listOfNotNull(
+                address.thoroughfare,
+                address.subLocality,
+                address.locality,
+                address.adminArea,
+                address.countryName
+            ).joinToString(", ")
+
+            val gpsStatus = updateGPSStatus()
+            gpsStatusText.text = "$gpsStatus\n" + getString(R.string.location_label, fullAddress)
+
+            Log.d("GeoLocation", "Full Address: $fullAddress")
+        } else {
+            gpsStatusText.text = getString(R.string.unable_to_find_address)
+        }
+    }
+
     private fun updateGPSStatus(): String {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
         return if (isGpsEnabled) {
             gpsStatusText.setTextColor(ContextCompat.getColor(this, R.color.green))
-            "GPS Status: Enabled"
+            getString(R.string.gps_status_enabled)
         } else {
             gpsStatusText.setTextColor(ContextCompat.getColor(this, R.color.red))
-            "GPS Status: Disabled"
+            getString(R.string.gps_status_disabled)
         }
     }
 
-    // Send SMS
+    /** SMS */
     private fun sendSMS(phoneNumber: String, message: String) {
+        if (!hasSmsPermission()) {
+            Toast.makeText(this, "SMS permission not granted", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         try {
-            val smsManager = SmsManager.getDefault()
-            // ⚠️ Reminder: Replace with your own number for testing.
-            // Do not commit real numbers in production for privacy.
-            smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+            SmsManager.getDefault().sendTextMessage(phoneNumber, null, message, null, null)
             Toast.makeText(this, "SMS sent!", Toast.LENGTH_SHORT).show()
+        } catch (se: SecurityException) {
+            Toast.makeText(this, "Permission denied for sending SMS", Toast.LENGTH_SHORT).show()
+            Log.e("SMS", "Permission denied", se)
         } catch (e: Exception) {
             Toast.makeText(this, "SMS failed: ${e.message}", Toast.LENGTH_LONG).show()
-            e.printStackTrace()
+            Log.e("SMS", "Error sending SMS", e)
         }
     }
 
-    // Handle permission request results
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    /** Permission results */
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == 1001) {
             if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                getLastKnownLocation()
                 startLocationUpdates()
             } else {
-                val shouldShowRationale = permissions.any {
-                    ActivityCompat.shouldShowRequestPermissionRationale(this, it)
-                }
-
-                if (!shouldShowRationale) {
-                    showPermissionDeniedDialog()
-                } else {
-                    Toast.makeText(
-                        this,
-                        "Permissions are required to use this app.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                handlePermissionDenied(permissions)
             }
         }
     }
 
-    // Show dialog when permissions are permanently denied
+    private fun handlePermissionDenied(permissions: Array<out String>) {
+        val shouldShowRationale = permissions.any {
+            ActivityCompat.shouldShowRequestPermissionRationale(this, it)
+        }
+
+        if (!shouldShowRationale) {
+            showPermissionDeniedDialog()
+        } else {
+            Toast.makeText(this, "Permissions are required to use this app.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun showPermissionDeniedDialog() {
         AlertDialog.Builder(this)
             .setTitle("Permission Required")
-            .setMessage("To fully use OneTapSOS, please enable Microphone and Location in your device settings.")
-            .setPositiveButton("Go to Settings") { _, _ ->
-                openAppSettings()
-            }
+            .setMessage("To fully use OneTapSOS, please enable Microphone, Location, and SMS in your device settings.")
+            .setPositiveButton("Go to Settings") { _, _ -> openAppSettings() }
             .setNegativeButton("Cancel", null)
             .show()
     }
 
-    // Redirect to app settings
     private fun openAppSettings() {
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+        startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
             data = Uri.fromParts("package", packageName, null)
-        }
-        startActivity(intent)
+        })
     }
 }

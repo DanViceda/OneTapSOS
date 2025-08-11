@@ -16,4 +16,19 @@
     <string name="phone_number">Phone Number</string>
     <string name="full_name">Full Name</string>
     <string name="back_to_home">Back to Home</string>
+    <string name="network_status_unknown" />
+    <string name="calls_available_unlimited" />
+    <string name="open_settings" />
+    <string name="instruction_text" />
+    <string name="start_recording" />
+    <string name="send_emergency" />
+    <string name="gps_status_unknown" />
+    <string name="account_status_registered" />
+
+    <string name="gps_status_enabled">GPS Status: Enabled</string>
+    <string name="gps_status_disabled">GPS Status: Disabled</string>
+    <string name="fetching_location">Fetching location…</string>
+    <string name="unable_to_find_address">Unable to find address</string>
+    <string name="location_label">Location: %1$s</string>
+    <string name="record_instruction">Press the button to record the audio</string>
 </resources>

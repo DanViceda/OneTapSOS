@@ -29,7 +29,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_marginTop="32dp"
-            android:src="@drawable/profile_icon"
+            android:src="@drawable/button_icon"
             android:contentDescription="Profile Icon" />
 
         <TextView

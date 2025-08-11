@@ -14,13 +14,13 @@
         <!-- 🔙 Back Arrow - Top Right -->
         <ImageButton
             android:id="@+id/backButton"
-            android:layout_width="32dp"
+            android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_gravity="end"
-            android:src="@drawable/ic_send"
+            android:layout_marginTop="8dp"
             android:background="?attr/selectableItemBackground"
             android:contentDescription="@string/back_to_home"
-            android:layout_marginTop="8dp"/>
+            android:src="@drawable/ic_send" />
 
         <!-- 📞 Call Status -->
         <TextView
@@ -55,7 +55,7 @@
             android:layout_marginTop="60dp" />
 
         <Button
-            android:id="@+id/registerBtn"
+            android:id="@+id/registerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Register an Account"
@@ -78,7 +78,7 @@
             android:layout_marginTop="42dp" />
 
         <Button
-            android:id="@+id/loginBtn"
+            android:id="@+id/LoginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Log In"

@@ -11,15 +11,16 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- 🡐 Back Arrow Icon -->
-        <ImageView
+        <!-- 🔙 Back Arrow - Top Right -->
+        <ImageButton
+            android:id="@+id/backButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_send"
+            android:layout_height="32dp"
             android:layout_gravity="end"
             android:layout_marginTop="8dp"
-            android:contentDescription="Back to landing"
-            android:padding="8dp" />
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/back_to_home"
+            android:src="@drawable/ic_send" />
 
         <!-- 📝 Title -->
         <TextView
