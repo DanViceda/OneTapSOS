@@ -1,181 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:padding="24dp">
+    android:background="@color/white">
 
-    <LinearLayout
+    <!-- 🔹 NAVBAR / TOOLBAR -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/red"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:titleTextColor="@color/white">
 
-        <!-- 🔙 Back Arrow - Top Right -->
+        <!-- Left Back Button -->
         <ImageButton
             android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            android:background="?attr/selectableItemBackground"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/back_to_home"
-            android:src="@drawable/ic_send" />
-
-
-        <!-- Title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Account Registration"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:layout_marginTop="42dp" />
-
-        <!-- Google Registration Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Register using Google?"
-            android:textSize="16sp"
-            android:textColor="@color/primary"
-            android:layout_marginTop="32dp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Register with Google"
-            android:backgroundTint="@color/primary"
-            android:textColor="@color/white"
-            android:padding="18dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Manual Registration -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Register Manually?"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Full Name -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Full Name"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:layout_marginBottom="4dp" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter full name"
-            android:inputType="textPersonName"
-            android:background="@drawable/box_input"
+            android:src="@drawable/ic_back"
+            android:layout_marginEnd="14dp"
+            android:layout_gravity="end|center_vertical"
             android:padding="8dp"
-            android:textSize="16sp"
-            android:textColor="@color/primary"
-            android:textColorHint="@color/primary"
-            android:layout_marginBottom="12dp" />
+            app:tint="@color/white" />
+    </androidx.appcompat.widget.Toolbar>
 
-        <!-- Email -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:layout_marginBottom="4dp" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter email"
-            android:inputType="textEmailAddress"
-            android:background="@drawable/box_input"
-            android:padding="8dp"
-            android:textSize="16sp"
-            android:textColor="@color/primary"
-            android:textColorHint="@color/primary"
-            android:layout_marginBottom="12dp" />
+    <!-- 🔹 REGISTRATION FORM CONTENT -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp">
 
-        <!-- Phone Number -->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Phone Number"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:layout_marginBottom="4dp" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter phone number"
-            android:inputType="phone"
-            android:background="@drawable/box_input"
-            android:padding="8dp"
-            android:textSize="16sp"
-            android:textColor="@color/primary"
-            android:textColorHint="@color/primary"
-            android:layout_marginBottom="12dp" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
-        <!-- Password -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Password"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:layout_marginBottom="4dp" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter password"
-            android:inputType="textPassword"
-            android:background="@drawable/box_input"
-            android:padding="8dp"
-            android:textSize="16sp"
-            android:textColor="@color/primary"
-            android:textColorHint="@color/primary"
-            android:layout_marginBottom="12dp" />
+            <!-- Heading -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Account Registration"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register using google?"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_marginTop="7dp"/>
 
-        <!-- Confirm Password -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Confirm Password"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:layout_marginBottom="4dp" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Confirm password"
-            android:inputType="textPassword"
-            android:background="@drawable/box_input"
-            android:padding="8dp"
-            android:textSize="18sp"
-            android:textColor="@color/primary"
-            android:textColorHint="@color/primary"
-            android:layout_marginBottom="20dp" />
+            <Button
+                android:id="@+id/googleRegisterBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Register with Google"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/white"
+                android:padding="18dp"
+                android:layout_marginTop="7dp"
+                android:fontFamily="@font/poppins_regular" />
 
-        <!-- Register Button -->
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Register"
-            android:backgroundTint="@color/primary"
-            android:textColor="@color/white"
-            android:padding="18dp"
-            android:layout_marginTop="8dp" />
-    </LinearLayout>
-</ScrollView>
+            <!-- Manual Registration -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="7dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Register Manually?"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Full Name -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Full Name"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/poppins_regular" />
+
+            <EditText
+                android:id="@+id/fullNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter full name"
+                android:inputType="textPersonName"
+                android:background="@drawable/box_input"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="7dp"
+                android:drawableStart="@drawable/ic_user"
+                android:drawablePadding="10dp" />
+
+            <!-- Email -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/poppins_regular" />
+            <EditText
+                android:id="@+id/emailInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter email"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/box_input"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="7dp"
+                android:fontFamily="@font/poppins_regular"
+                android:drawableStart="@drawable/ic_email"
+                android:drawablePadding="10dp"/>
+
+            <!-- Phone Number -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone Number"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/poppins_regular" />
+
+            <EditText
+                android:id="@+id/phoneInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="(e.g.,09065992918)"
+                android:inputType="phone"
+                android:background="@drawable/box_input"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="7dp"
+                android:fontFamily="@font/poppins_regular"
+                android:drawableStart="@drawable/ic_phone"
+                android:drawablePadding="10dp"/>
+
+            <!-- Password -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/poppins_regular" />
+
+            <EditText
+                android:id="@+id/passwordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter password"
+                android:inputType="textPassword"
+                android:background="@drawable/box_input"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/poppins_regular"
+                android:drawableEnd="@drawable/ic_eye_closed"
+                android:drawablePadding="10dp" />
+
+            <TextView
+                android:id="@+id/passwordError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password must be 8+ characters, include uppercase, lowercase, number, and special character."
+                android:textSize="12sp"
+                android:textColor="@color/red"
+                android:layout_marginBottom="7dp"
+                android:fontFamily="@font/poppins_regular"
+                android:visibility="gone" />
+
+            <!-- Confirm Password -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Confirm Password"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/poppins_regular" />
+
+            <EditText
+                android:id="@+id/confirmPasswordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm password"
+                android:inputType="textPassword"
+                android:background="@drawable/box_input"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:layout_marginBottom="14dp"
+                android:fontFamily="@font/poppins_regular"
+                android:drawableEnd="@drawable/ic_eye_closed"
+                android:drawablePadding="10dp"/>
+
+            <!-- Register Button -->
+            <Button
+                android:id="@+id/registerBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/white"
+                android:padding="18dp"
+                android:fontFamily="@font/poppins_regular" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ⏳ Loading Spinner -->
+    <ProgressBar
+        android:id="@+id/loadingSpinner"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge" />
+</LinearLayout>

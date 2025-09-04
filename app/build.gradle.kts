@@ -85,9 +85,15 @@ dependencies {
 
     // EncryptedSharedPreferences
     implementation(libs.androidx.security.crypto.v110beta01)
+    implementation(libs.filament.android)
 
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //google
+    implementation(libs.play.services.auth)
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.onetapsos">
 
     <!-- Required Permissions -->
     <uses-feature
@@ -13,6 +14,13 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
 
     <!-- Explicit Query for Speech Recognition Services -->
     <queries>
@@ -30,6 +38,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OneTapSOS"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31">
 
         <!-- Main activity -->
@@ -43,17 +53,20 @@
         </activity>
 
         <!-- Guest activity -->
-        <activity
-            android:name=".GuestActivity"
-            android:exported="false" />
+        <activity android:name=".GuestActivity" android:exported="false" />
 
         <!-- Profile activity -->
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
+        <activity android:name=".ProfileActivity" android:exported="false" />
 
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
+        <!-- Login activity -->
+        <activity android:name=".LoginActivity" android:exported="false" />
+
+        <!-- Register activity -->
+        <activity android:name=".RegisterActivity" android:exported="false" />
+        <activity android:name=".AccountVerificationActivity" />
+        <activity android:name=".PhoneVerificationActivity" />
+        <activity android:name=".EmailVerificationActivity" />
+        <activity android:name=".ReportActivity" />
 
     </application>
 </manifest>

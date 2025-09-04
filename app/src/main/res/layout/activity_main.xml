@@ -1,180 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <!-- 🔹 Main Content Container -->
     <LinearLayout
+        android:id="@+id/mainContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        >
 
-        <!-- Top Status + Icon Row -->
-        <RelativeLayout
+        <!-- 🔹 NAVBAR / TOOLBAR -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/red"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="@color/white">
 
-            <!-- Vertical Status Texts -->
-            <LinearLayout
-                android:id="@+id/statusContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:orientation="vertical"
-                android:paddingTop="8dp">
-
-                <TextView
-                    android:id="@+id/accountStatusText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:text="@string/account_status_registered"
-                    android:textColor="?attr/colorOnSurfaceVariant"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/callsAvailableText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:text="@string/calls_available_unlimited"
-                    android:textColor="?attr/colorOnSurfaceVariant"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/networkStatusText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/network_status_unknown"
-                    android:textColor="?attr/colorOnSurfaceVariant"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <!-- Menu Icon Button -->
             <ImageButton
                 android:id="@+id/buttonIcon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="?attr/selectableItemBackground"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end|center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/open_settings"
-                android:scaleType="fitCenter"
-                android:src="@drawable/button_icon" />
-        </RelativeLayout>
+                android:padding="7dp"
+                android:layout_marginEnd="14dp"
+                android:src="@drawable/ic_menu" />
+        </androidx.appcompat.widget.Toolbar>
 
-        <!-- App Header -->
-        <TextView
-            android:id="@+id/headerText"
+        <!-- 🔹 SCROLL CONTENT -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:padding="12dp"
-            android:text="@string/one_tap_sos"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-        <!-- New Instructional Text -->
-        <TextView
-            android:id="@+id/recordInstructionText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:padding="4dp"
-            android:text="@string/record_instruction"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textSize="16sp" />
-
-        <!-- Instruction Text -->
-        <TextView
-            android:id="@+id/paragraphText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:letterSpacing="0.02"
-            android:padding="4dp"
-            android:text="@string/instruction_text"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="16sp" />
-
-        <!-- Record Button -->
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16dp"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/start_recording"
-            android:scaleType="fitCenter"
-            android:src="@drawable/button_inactive" />
-
-        <!-- Emergency Message Field -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:background="@drawable/border_box"
-            android:padding="8dp">
-
-            <EditText
-                android:id="@+id/messageInput"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toStartOf="@id/sendButton"
-                android:autofillHints="text"
-                android:background="@android:color/transparent"
-                android:gravity="top|start"
-                android:hint="@string/type_emergency_here"
-                android:imeOptions="actionDone"
-                android:inputType="textMultiLine"
-                android:letterSpacing="0.02"
-                android:maxLines="10"
-                android:minLines="6"
-                android:padding="8dp"
-                android:textColor="?attr/colorOnSurface"
-                android:textColorHint="?attr/colorOnSurfaceVariant"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-            <ImageButton
-                android:id="@+id/sendButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:background="?attr/selectableItemBackground"
-                android:contentDescription="@string/send_emergency"
-                android:src="@drawable/ic_send" />
+                <!-- STATUS CONTAINER -->
+                <LinearLayout
+                    android:id="@+id/statusContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="7dp"
+                    android:padding="7dp"
+                    android:layout_marginTop="7dp">
 
-            <ProgressBar
-                android:id="@+id/sendProgress"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentEnd="true"
-                android:layout_above="@id/sendButton"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="4dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/accountStatusText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Account Status: Placeholder"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/poppins_regular" />
 
-        <!-- GPS Status -->
-        <TextView
-            android:id="@+id/gpsStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/gps_status_unknown"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/networkStatusText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Network Status: Placeholder"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/poppins_regular" />
+                </LinearLayout>
 
+                <!-- App Header -->
+                <TextView
+                    android:id="@+id/headerText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/one_tap_sos"
+                    android:textColor="@color/red"
+                    android:textSize="32sp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textStyle="bold" />
+
+                <!-- Sub Heading -->
+                <TextView
+                    android:id="@+id/recordInstructionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="Press the button to record the audio"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_regular" />
+
+                <!-- 🔹 Timer Display -->
+                <TextView
+                    android:id="@+id/recordTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_bold"
+                    android:visibility="gone" />
+
+                <!-- 🔴 Record Button -->
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <ImageButton
+                        android:id="@+id/recordButton"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:layout_gravity="center"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/start_recording"
+                        android:src="@drawable/ic_record"
+                        android:scaleType="centerInside"
+                        android:padding="20dp"/>
+                </FrameLayout>
+
+                <!-- Emergency Message Field -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:background="@drawable/rounded_edittext_bg"
+                    android:padding="8dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginTop="14dp">
+
+                    <EditText
+                        android:id="@+id/messageInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toStartOf="@id/sendButton"
+                        android:autofillHints="text"
+                        android:background="@android:color/transparent"
+                        android:gravity="top|start"
+                        android:hint="@string/type_emergency_here"
+                        android:imeOptions="actionDone"
+                        android:inputType="textMultiLine"
+                        android:letterSpacing="0.02"
+                        android:maxLines="10"
+                        android:minLines="6"
+                        android:padding="8dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/poppins_regular" />
+
+                    <ImageButton
+                        android:id="@+id/sendButton"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/send_emergency"
+                        android:src="@drawable/ic_send" />
+
+                    <ProgressBar
+                        android:id="@+id/sendProgress"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_above="@id/sendButton"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <!-- GPS Status -->
+                <TextView
+                    android:id="@+id/gpsStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/gps_status_unknown"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
-</ScrollView>
+
+</RelativeLayout>

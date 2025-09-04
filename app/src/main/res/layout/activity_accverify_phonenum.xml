@@ -1,72 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:padding="24dp">
+    android:background="@color/white">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/red"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:titleTextColor="@color/white">
 
-        <!-- 🔙 Back Arrow -->
-        <ImageView
-            android:id="@+id/icon_back_to_landing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_send"
-            android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            android:contentDescription="Back"
-            android:padding="8dp" />
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/back_to_home"
+            android:src="@drawable/ic_back"
+            android:layout_marginEnd="14dp"
+            android:layout_gravity="end|center_vertical"
+            android:padding="8dp"
+            app:tint="@color/white" />
+    </androidx.appcompat.widget.Toolbar>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp">
 
-        <!-- 📝 Title -->
-        <TextView
-            android:id="@+id/text_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Input CODE sent to your Phone Number"
-            android:textSize="28sp"
-            android:textColor="@color/primary"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="32dp" />
-
-        <!-- 🔢 Verify by Code -->
-        <EditText
-            android:id="@+id/edit_phone_code"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Code"
-            android:textSize="18sp"
-            android:padding="16dp"
-            android:inputType="number"
-            android:background="@drawable/box_input"
-            android:layout_marginBottom="64dp" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
-        <!-- ✉️ Use Email Option -->
-        <TextView
-            android:id="@+id/text_use_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Use another Phone Number?"
-            android:textColor="@color/primary"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
+            <TextView
+                android:id="@+id/text_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Input CODE sent to your Phone Number"
+                android:textSize="28sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="32dp"
+                android:fontFamily="@font/poppins_bold" />
 
-        <!-- 📱 Change Number Option -->
-        <TextView
-            android:id="@+id/text_change_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Use Email?"
-            android:textColor="@color/primary"
-            android:textSize="16sp" />
+            <EditText
+                android:id="@+id/edit_phone_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Code"
+                android:textSize="16sp"
+                android:padding="16dp"
+                android:inputType="number"
+                android:background="@drawable/box_input"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray" />
 
-    </LinearLayout>
-</ScrollView>
+            <Button
+                android:id="@+id/submitCodeBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit Code"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:padding="18dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/poppins_regular" />
+
+            <TextView
+                android:id="@+id/text_use_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Use Email?"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/poppins_regular" />
+
+            <TextView
+                android:id="@+id/text_change_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Use another Phone Number?"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_regular" />
+
+            <ProgressBar
+                android:id="@+id/loadingSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

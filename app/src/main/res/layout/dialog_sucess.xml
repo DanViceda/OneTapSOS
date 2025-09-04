@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/rounded_dialog_bg"
+    android:gravity="center_horizontal">
+
+    <!-- Layer 1: Success Message -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account Registered Successfully!"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Layer 2: Proceed Arrow Button -->
+    <ImageButton
+        android:id="@+id/proceedButtons"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_next"
+        android:contentDescription="Proceed to verification"
+        android:layout_marginBottom="26dp"
+        android:padding="8dp" />
+
+    <!-- Layer 3: Proceeding Message -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Now proceeding to Account Verification..."
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Will automatically proceed in: "
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Layer 4: Countdown -->
+    <TextView
+        android:id="@+id/countdownText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/red"
+        android:fontFamily="@font/poppins_regular" />
+
+</LinearLayout>

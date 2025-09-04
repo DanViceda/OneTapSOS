@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.Theme.OneTapSOS" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary app colors -->
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryVariant">@color/red</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">@color/red</item>
+        <item name="android:navigationBarColor">@color/red</item>
+        <item name="android:windowLightStatusBar">false</item> <!-- white icons on red -->
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+</resources>

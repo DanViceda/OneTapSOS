@@ -5,11 +5,21 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 class GuestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_guest)
+
+        // Make system bars red (fix “purple” bar)
+        val red = ContextCompat.getColor(this, R.color.red)
+        window.statusBarColor = red
+        window.navigationBarColor = red
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
 
         // UI references
         val backButton = findViewById<ImageButton>(R.id.backButton)

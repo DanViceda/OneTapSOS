@@ -1,92 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white">
 
-    <LinearLayout
+    <!-- 🔹 NAVBAR / TOOLBAR -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:padding="32dp">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/red"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:titleTextColor="@color/white">
 
-        <!-- 🔙 Back Arrow - Top Right -->
+        <!-- Right-side back/arrow button -->
         <ImageButton
             android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            android:background="?attr/selectableItemBackground"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/back_to_home"
-            android:src="@drawable/ic_send" />
+            android:padding="7dp"
+            android:layout_marginEnd="14dp"
+            android:src="@drawable/ic_back" />
+    </androidx.appcompat.widget.Toolbar>
 
-        <!-- 📞 Call Status -->
-        <TextView
-            android:id="@+id/unregText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:text="Unregistered Calls Available:"
-            android:textColor="@color/primary"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+    <!-- 🔹 SCROLL CONTENT -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/unregNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:layout_marginTop="20dp" />
-
-        <!-- 📝 Register Prompt -->
-        <TextView
-            android:id="@+id/registerPrompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Register for unlimited calls"
-            android:textSize="18sp"
-            android:textColor="@color/primary"
-            android:textStyle="bold"
-            android:layout_marginTop="60dp" />
-
-        <Button
-            android:id="@+id/registerButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register an Account"
-            android:layout_marginTop="14dp"
-            android:padding="18dp"
-            android:background="@null"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="32dp">
 
-            android:backgroundTint="@color/primary"
-            android:textColor="@color/white" />
+            <!-- 📞 Call Status -->
+            <TextView
+                android:id="@+id/unregText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="Unregistered Calls Available:"
+                android:textColor="@color/black"
+                android:textSize="21sp"
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold" />
 
-        <!-- 🔐 Login Prompt -->
-        <TextView
-            android:id="@+id/loginPrompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Already have an account?"
-            android:textSize="18sp"
-            android:textColor="@color/primary"
-            android:textStyle="bold"
-            android:layout_marginTop="42dp" />
+            <TextView
+                android:id="@+id/unregNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp" />
 
-        <Button
-            android:id="@+id/LoginButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Log In"
-            android:padding="18dp"
-            android:layout_marginTop="14dp"
-            android:background="@null"
-            android:backgroundTint="@color/primary"
-            android:textColor="@color/white" />
+            <!-- 📝 Register Prompt -->
+            <TextView
+                android:id="@+id/registerPrompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register for unlimited calls"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="60dp" />
 
-    </LinearLayout>
-</ScrollView>
+            <Button
+                android:id="@+id/registerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Register an Account"
+                android:layout_marginTop="14dp"
+                android:padding="18dp"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_bold" />
+
+            <!-- 🔐 Login Prompt -->
+            <TextView
+                android:id="@+id/loginPrompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have an account?"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="42dp" />
+
+            <Button
+                android:id="@+id/LoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log In"
+                android:padding="18dp"
+                android:layout_marginTop="14dp"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_bold" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
