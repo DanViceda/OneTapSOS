@@ -19,6 +19,7 @@ class PhoneVerificationActivity : AppCompatActivity() {
 
     private val client = OkHttpClient()
     private lateinit var loadingSpinner: ProgressBar
+    private var userPhone: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,13 +31,14 @@ class PhoneVerificationActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
 
-        val userEmail = intent.getStringExtra("USER_EMAIL") ?: ""
+        // ✅ get phone from intent (not email)
+        userPhone = intent.getStringExtra("USER_PHONE") ?: ""
         loadingSpinner = findViewById(R.id.loadingSpinner)
         loadingSpinner.visibility = View.GONE
 
         findViewById<ImageButton>(R.id.backButton)?.setOnClickListener {
             startActivity(Intent(this, AccountVerificationActivity::class.java).apply {
-                putExtra("USER_EMAIL", userEmail)
+                putExtra("USER_PHONE", userPhone)
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
             })
             finish()
@@ -44,7 +46,7 @@ class PhoneVerificationActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.text_use_email).setOnClickListener {
             startActivity(Intent(this, EmailVerificationActivity::class.java).apply {
-                putExtra("USER_EMAIL", userEmail)
+                putExtra("USER_EMAIL", getSharedPreferences("OneTapSOS", MODE_PRIVATE).getString("userEmail", ""))
             })
             finish()
         }
@@ -57,26 +59,24 @@ class PhoneVerificationActivity : AppCompatActivity() {
         findViewById<Button>(R.id.submitCodeBtn).setOnClickListener {
             val code = codeInput.text.toString().trim()
             if (code.isNotEmpty()) {
-                verifyOTP(userEmail, code)
+                verifyOTP(userPhone, code) // ✅ now correct
             } else {
                 Toast.makeText(this, "Please enter the OTP code", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun verifyOTP(email: String, code: String) {
+    private fun verifyOTP(phone: String, code: String) {
         loadingSpinner.visibility = View.VISIBLE
 
         val json = JSONObject().apply {
-            put("email", email)
-            put("otp_code", code)
+            put("phone", phone) // ✅ send phone
+            put("verification_code", code)
         }
 
-        val mediaType = "application/json; charset=utf-8".toMediaType()
-        val body = json.toString().toRequestBody(mediaType)
-
+        val body = json.toString().toRequestBody("application/json; charset=utf-8".toMediaType())
         val request = Request.Builder()
-            .url("${Constants.BASE_URL}/api/users/verify-otp/")
+            .url("${Constants.BASE_URL}/api/users/verify-phone/") // ✅ matches Django
             .post(body)
             .build()
 
@@ -93,8 +93,8 @@ class PhoneVerificationActivity : AppCompatActivity() {
                 runOnUiThread {
                     loadingSpinner.visibility = View.GONE
                     if (response.isSuccessful) {
-                        val sharedPrefs = getSharedPreferences("OneTapSOS", MODE_PRIVATE)
-                        with(sharedPrefs.edit()) {
+                        val prefs = getSharedPreferences("OneTapSOS", MODE_PRIVATE)
+                        with(prefs.edit()) {
                             putBoolean("isLoggedIn", true)
                             apply()
                         }
@@ -102,13 +102,8 @@ class PhoneVerificationActivity : AppCompatActivity() {
                         startActivity(Intent(this@PhoneVerificationActivity, LoginActivity::class.java))
                         finish()
                     } else {
-                        try {
-                            val errorJson = JSONObject(responseBody ?: "")
-                            val errorMessage = errorJson.optString("error", "Verification failed")
-                            Toast.makeText(this@PhoneVerificationActivity, errorMessage, Toast.LENGTH_LONG).show()
-                        } catch (e: Exception) {
-                            Toast.makeText(this@PhoneVerificationActivity, "Verification failed: ${response.code}", Toast.LENGTH_LONG).show()
-                        }
+                        Toast.makeText(this@PhoneVerificationActivity, "Invalid code", Toast.LENGTH_LONG).show()
+                        Log.e("PhoneVerification", "Response: $responseBody")
                     }
                 }
             }

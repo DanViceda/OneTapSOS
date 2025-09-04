@@ -82,7 +82,7 @@ class EmailVerificationActivity : AppCompatActivity() {
         val json = JSONObject().apply { put("email", email) }
         val body = json.toString().toRequestBody("application/json; charset=utf-8".toMediaType())
         val request = Request.Builder()
-            .url("${Constants.BASE_URL}/api/users/send-otp/")
+            .url("${Constants.BASE_URL}/api/users/send-email-otp/")
             .post(body)
             .build()
 
